@@ -13,13 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Reservation {
-
-}
-
 model Customer {
+  id           Int           @id @default(autoincrement())
+  name         String
+  reservations Reservation[]
 
 }
- model Restaraunt {
+ model Restaurant {
+  id           Int           @id @default(autoincrement())
+  name         String
+  reservations Reservation[]
 
  }
+
+model Reservation {
+  id           Int        @id @default(autoincrement())
+  date         DateTime
+  partyCount   Int
+  customer     Customer   @relation(fields: [customerId], references: [id])
+  customerId   Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+
+}
